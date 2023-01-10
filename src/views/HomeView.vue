@@ -39,8 +39,8 @@ main {
   flex-basis: auto;
   align-self: stretch;
   order: 0;
-  min-width: 61px;
-  height:inherit;
+  min-width: 81px;
+  height:100%;
   background: #161616;
   
 }

@@ -1,5 +1,5 @@
 <template>
-    <nav >
+    <div class="nav" >
         <div class="flex-container">
             <stop-icon :scale="scale" class="flex-items"/>
             <pause-icon :scale="scale" class="flex-items"/>
@@ -8,7 +8,7 @@
             <edit-icon :scale="scale" class="flex-items"/>
             <play-icon :scale="scale" class="flex-items"/>
         </div>
-    </nav>
+    </div>
 
 </template>
 
@@ -24,8 +24,11 @@ const scale = 1.3
 
 <style scoped>
 
-.flex-container {
+.nav{
     height: 100vh;
+}
+.flex-container {
+    height: 100%;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -42,14 +45,27 @@ const scale = 1.3
     align-self: center;
     order: 0;
     align-items: center;
-    margin-bottom: 15px;
-    margin-top: 15px;
+    height: 50px;
+ 
+  
+ 
+
     transition: 0.3s;
 }
 
 .flex-items:hover {
-    margin-bottom: 30px;
-    margin-top: 30px;
+    width: 30px;
+    height: 60px;
+
+    background-color: rgba(240, 248, 255, 0.076);
+    border-radius: 10px;
+    padding-inline: 10px;
+}
+
+.flex-items:active {
+ 
+
+    background-color: rgba(240, 248, 255, 0.196);
 }
 
 
