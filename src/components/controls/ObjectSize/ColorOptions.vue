@@ -18,8 +18,7 @@ const softBlue = '#AF8FE9';
 </script>
 
 <style scoped>
-
-  .flex-container {
+.flex-container {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -27,7 +26,7 @@ const softBlue = '#AF8FE9';
     align-items: center;
     align-content: normal;
   }
-
+  
   .flex-items {
     display: block;
     flex-grow: 0;
@@ -35,6 +34,7 @@ const softBlue = '#AF8FE9';
     flex-basis: auto;
     align-self: auto;
     order: 0;
+
   }
 
 </style>
