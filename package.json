@@ -7,7 +7,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "test:unit": "vitest --environment jsdom --root src/",
-    "commit":"func() { git add . && git commit -m \"BUILD - $1\"; }; func"
+    "commit":"func() { git add . && git commit -m \"BUILD - $1\" && git; }; func"
   },
   "dependencies": {
     "pinia": "^2.0.28",
