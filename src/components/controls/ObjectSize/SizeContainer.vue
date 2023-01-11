@@ -42,7 +42,7 @@ const props = defineProps(['size','value'])
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 20px;
+    font-size: 15px;
     color: #ffffff;
     cursor: pointer;
   }

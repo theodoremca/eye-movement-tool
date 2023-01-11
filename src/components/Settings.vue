@@ -4,9 +4,9 @@
             <div class="flex-items"><p class="title-text">Eye movement tool</p></div>
             <div class="flex-items"><object-color/></div>
             <div class="flex-items"><object-size/></div>
-            <div class="flex-items"></div>
-            <div class="flex-items"></div>
-            <div class="flex-items"></div>
+            <div class="flex-items"><audio-option/></div>
+            <div class="flex-items"><Time/></div>
+            <div class="flex-items"><Speed/></div>
          </div>
     </div>
 </template>
@@ -14,6 +14,9 @@
 <script setup>
 import ObjectColor from "./controls/ObjectColor/index.vue";
 import ObjectSize from "./controls/ObjectSize/index.vue";
+import AudioOption from "./controls/AudioOption/index.vue";
+import Time from "./controls/Time.vue";
+import Speed from "./controls/Speed.vue";
 </script>
 
 <style  scoped>
