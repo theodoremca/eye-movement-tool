@@ -1,16 +1,16 @@
 <template>
-  <div>
+  <div style="margin-top: 60px;">
     <p
       style="font-size: 14px; font-weight: 700; line-height: 100%; color: white"
     >
-      OBJECT COLOR
+      OBJECT SIZE
     </p>
-    <color-options />
+    <size-options />
   </div>
 </template>
 
 <script setup>
-import ColorOptions from "./ColorOptions.vue";
+import SizeOptions from "./SizeOptions.vue";
 </script>
 
 <style lang="scss" scoped></style>

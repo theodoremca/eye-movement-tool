@@ -1,16 +1,19 @@
 <template>
     <div>
         <div class="holder">
-            <div :style="`background-color:${color}`" class="Ellipse10"></div>
+            <div :style="`width: ${size}px;height: ${size}px;`" class="Ellipse10"><div class="number">{{value}}</div></div>
         </div>
     </div>
 </template>
 
 <script setup>
-const props = defineProps(['color'])
+const props = defineProps(['size','value'])
 </script>
 
 <style scoped>
+
+
+
 .holder:hover {
     background-color: rgba(240, 248, 255, 0.104);
     border-radius: 9999px;
@@ -26,18 +29,26 @@ const props = defineProps(['color'])
 }
 
 .Ellipse10 {
-    width: 23px;
-    height: 23px;
+    border-radius: 50%;
     border-radius: 9999px;
     transition: 0.3s;
     margin: 5px;
-
+    background-color: #FE7A00;
+    position: relative;
 }
 
-.Ellipse10:hover {
-    width: 25px;
-    height: 25px;
+.number {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    color: #ffffff;
+    cursor: pointer;
+  }
 
+.Ellipse10:hover {
+    border-color: azure;
 }
 
 .Ellipse10:active {

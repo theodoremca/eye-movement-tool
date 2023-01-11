@@ -1,16 +1,14 @@
 <template>
     <div>
         <div class="flex-container">
-            <color-container :color="blue" class="flex-items"/>
-            <color-container :color="orange" class="flex-items"/>
-            <color-container :color="yellow" class="flex-items"/>
-            <color-container :color="softBlue" class="flex-items"/>
+            <color-container :size="30" :value="1" class="flex-items"/>
+            <color-container :size="40" :value="2" class="flex-items"/>
          </div>
     </div>
 </template>
 
 <script setup>
-import ColorContainer from "./ColorContainer.vue";
+import ColorContainer from "./SizeContainer.vue";
 const blue = '#454ABE';
 const orange = '#FFA500';
 const yellow = '#FFFF00';

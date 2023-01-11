@@ -3,6 +3,7 @@
         <div class="flex-container">
             <div class="flex-items"><p class="title-text">Eye movement tool</p></div>
             <div class="flex-items"><object-color/></div>
+            <div class="flex-items"><object-size/></div>
             <div class="flex-items"></div>
             <div class="flex-items"></div>
             <div class="flex-items"></div>
@@ -12,6 +13,7 @@
 
 <script setup>
 import ObjectColor from "./controls/ObjectColor/index.vue";
+import ObjectSize from "./controls/ObjectSize/index.vue";
 </script>
 
 <style  scoped>
