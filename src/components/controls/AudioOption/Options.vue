@@ -2,7 +2,7 @@
   <div>
     <div class="flex-container">
       <div class="flex-items"> <label for="super-happy">
-          <input type="radio" name="rating" class="super-happy" id="super-happy" value="super-happy" />
+          <input v-model="selectedTune" @select="play" type="radio" name="rating"   class="super-happy" id="super-happy" value=0 />
           <div class="radio-button">
             <p class="button-text">
               1</p>
@@ -12,7 +12,7 @@
       </div>
       <div class="flex-items">
         <label for="happy">
-          <input type="radio" name="rating" class="happy" id="happy" value="happy" checked />
+          <input v-model="selectedTune" type="radio" name="rating" class="happy" id="happy" value=1 checked />
           <div class="radio-button">
             <p class="button-text">
               2</p>
@@ -24,6 +24,14 @@
 </template>
 
 <script setup>
+import { ref, watch } from 'vue'
+import { useMovementStore } from '@/stores/movement'
+const movement = useMovementStore()
+const selectedTune = ref(0)
+
+watch(selectedTune, (newTune, oldTune) => {
+  movement.updateTune(newTune, oldTune)
+})
 
 </script>
 

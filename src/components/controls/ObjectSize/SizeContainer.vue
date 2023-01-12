@@ -1,13 +1,16 @@
 <template>
     <div>
         <div class="holder">
-            <div :style="`width: ${size}px;height: ${size}px;`" class="Ellipse10"><div class="number">{{value}}</div></div>
+            <div @click="clickHandler" :style="`width: ${size}px;height: ${size}px;`" class="Ellipse10"><div class="number">{{value}}</div></div>
         </div>
     </div>
 </template>
 
 <script setup>
+import { useMovementStore } from '@/stores/movement'
 const props = defineProps(['size','value'])
+const movement = useMovementStore()
+const clickHandler = () => movement.updateSettings({size:props.size/2})
 </script>
 
 <style scoped>

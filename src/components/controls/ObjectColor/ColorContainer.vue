@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="holder">
-            <div @click="movement.updateSettings({color})" :style="`background-color:${color}`" class="Ellipse10"></div>
+            <div @click="clickHandler" :style="`background-color:${color}`" class="Ellipse10"></div>
         </div>
     </div>
 </template>
@@ -10,11 +10,8 @@
 import { useMovementStore } from '@/stores/movement'
 const props = defineProps(['color'])
 const movement = useMovementStore()
-
-
-
+const clickHandler = () => {movement.updateSettings({color:props.color})}
 </script>
-
 <style scoped>
 .holder:hover {
     background-color: rgba(240, 248, 255, 0.104);
@@ -22,14 +19,12 @@ const movement = useMovementStore()
     padding: 5px;
     transition: 0.3s;
 }
-
 .holder:active {
     background-color: transparent;
     border-radius: 9999px;
     padding: 5px;
     transition: 0.01s;
 }
-
 .Ellipse10 {
     width: 23px;
     height: 23px;
@@ -38,7 +33,6 @@ const movement = useMovementStore()
     margin: 5px;
 
 }
-
 .Ellipse10:hover {
     width: 25px;
     height: 25px;
