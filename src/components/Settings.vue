@@ -7,6 +7,7 @@
             <div class="flex-items"><audio-option/></div>
             <div class="flex-items"><Time/></div>
             <div class="flex-items"><Speed/></div>
+            <div class="flex-items"><main-buttons/></div>
          </div>
     </div>
 </template>
@@ -17,6 +18,7 @@ import ObjectSize from "./controls/ObjectSize/index.vue";
 import AudioOption from "./controls/AudioOption/index.vue";
 import Time from "./controls/Time.vue";
 import Speed from "./controls/Speed.vue";
+import MainButtons from "./controls/MainButtons.vue";
 </script>
 
 <style  scoped>

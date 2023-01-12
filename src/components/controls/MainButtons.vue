@@ -1,0 +1,41 @@
+<template>
+    <div>
+        <div class="flex-container">
+            <div class="flex-items"><main-button :text="'BACK'"/></div>
+            <div class="flex-items"><main-button :text="'START'"/></div>
+         </div>
+    </div>
+</template>
+
+<script setup>
+import MainButton from './Button.vue'
+</script>
+
+<style  scoped>
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: normal;
+    align-items: center;
+    align-content: normal;
+  }
+  
+  .flex-items:nth-child(1) {
+    display: block;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-basis: auto;
+    align-self: auto;
+    order: 0;
+  }
+  
+  .flex-items:nth-child(2) {
+    display: block;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-basis: auto;
+    align-self: auto;
+    order: 0;
+  }
+</style>
