@@ -1,13 +1,18 @@
 <template>
     <div>
         <div class="holder">
-            <div :style="`background-color:${color}`" class="Ellipse10"></div>
+            <div @click="movement.updateSettings({color})" :style="`background-color:${color}`" class="Ellipse10"></div>
         </div>
     </div>
 </template>
 
 <script setup>
+import { useMovementStore } from '@/stores/movement'
 const props = defineProps(['color'])
+const movement = useMovementStore()
+
+
+
 </script>
 
 <style scoped>
