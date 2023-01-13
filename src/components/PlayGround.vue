@@ -1,14 +1,23 @@
 <template>
-  <div>
+  <div ref="headline">
     <canvas id="myCanvas" width="200" height="300"></canvas>
-    <button @click="movement.stop()">clear</button>
-    <button @click="movement.start()">start</button>
   </div>
 </template>
 
 <script setup>
+import { onMounted ,  ref } from 'vue';
 import { useMovementStore } from './../stores/movement'
 const movement = useMovementStore()
+const headline = ref(null);
+onMounted(()=>{
+ console.log({headline:headline.value})
+function myEventHandler(e) {
+  console.log(headline.value.clientHeight,headline.value.clientWidth)
+}
+window.addEventListener('resize', myEventHandler)
+})
+
+
 </script>
 
 <style scoped>

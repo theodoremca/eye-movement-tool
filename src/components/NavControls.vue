@@ -1,17 +1,20 @@
 <template>
   <div class="nav">
     <div class="flex-container">
-      <stop-icon :scale="scale" class="flex-items" />
-      <pause-icon :scale="scale" class="flex-items" />
-      <clear-icon :scale="scale" class="flex-items" />
-      <delete-icon :scale="scale" class="flex-items" />
-      <edit-icon :scale="scale" class="flex-items" />
-      <play-icon :scale="scale" class="flex-items" />
+      
+      <pause-icon v-if="false" :scale="scale" class="flex-items" />
+      <clear-icon :scale="scale" @click="movement.clearSettings()" class="flex-items" />
+      <delete-icon v-if="false" :scale="scale" class="flex-items" />
+      <edit-icon v-if="false"  :scale="scale" class="flex-items" />
+      <stop-icon v-if="movement.settings.isPlaying" :scale="scale" @click="movement.stop()" class="flex-items" />
+      <play-icon v-else :scale="scale" @click="movement.start()"  class="flex-items" />
     </div>
   </div>
 </template>
 
 <script setup>
+
+import { useMovementStore } from './../stores/movement'
 import StopIcon from "./icons/IconStop.vue";
 import PauseIcon from "./icons/IconPause.vue";
 import PlayIcon from "./icons/IconPlay.vue";
@@ -19,6 +22,10 @@ import EditIcon from "./icons/IconEdit.vue";
 import DeleteIcon from "./icons/IconDelete.vue";
 import ClearIcon from "./icons/IconClear.vue";
 const scale = 1.3;
+
+const movement = useMovementStore()
+
+
 </script>
 
 <style scoped>

@@ -1,15 +1,20 @@
 <script setup>
+import { onMounted } from 'vue'
 import NavControls from '../components/NavControls.vue'
 import Settings from '../components/Settings.vue'
 import PlayGround from '../components/PlayGround.vue'
+import { useMovementStore } from './../stores/movement'
+const movement = useMovementStore()
+
+
 </script>
 
 <template>
-  <main>
+  <main> 
     <div class="flex-container">
       <nav-controls class="flex-items"></nav-controls>
-      <settings class="flex-items"></settings>
-      <play-ground class="flex-items"></play-ground>
+      <settings v-if="movement.settings.settingsOpened"  class="flex-items"></settings>
+      <play-ground  class="flex-items"></play-ground>
    </div>
   </main>
 </template>

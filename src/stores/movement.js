@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { ref} from 'vue'
 import { defineStore } from 'pinia'
 
 export const useMovementStore = defineStore('movement', () => {
@@ -12,9 +12,27 @@ export const useMovementStore = defineStore('movement', () => {
   var interV;
   var speed = 200;
   var time = 30;
-  var color = "#0000ff";
+  var color = "#454ABE";
   var size = 20;
   var selectedTune = 0
+  var isPlaying = false;
+  var settingsOpened = true;
+  const init = {
+    dx,
+    dy,
+    y,
+    x,
+    maxX,
+    maxY,
+    interV,
+    speed,
+    color,
+    size,
+    time,
+    selectedTune,
+    isPlaying,
+    settingsOpened
+  }
   const settings = ref({
     dx,
     dy,
@@ -27,8 +45,13 @@ export const useMovementStore = defineStore('movement', () => {
     color,
     size,
     time,
-    selectedTune
+    selectedTune,
+    isPlaying,
+    settingsOpened
   });
+
+ 
+  
 
   const draw = () => {
     let context = myCanvas.getContext("2d");
@@ -45,11 +68,20 @@ export const useMovementStore = defineStore('movement', () => {
     settings.value.y += settings.value.dy;
   };
 
+
+
   const updateSettings = (settingsUpdate) => {
     Object.assign(settings.value, settingsUpdate)
+    draw()
+  }
+
+  const clearSettings = () => {
+    Object.assign(settings.value, init)
   }
 
   const start = () =>{
+    if(!settings.value.isPlaying) settings.value.isPlaying = true;
+    if(settings.value.settingsOpened) settings.value.settingsOpened = false;
     settings.value.interV = setInterval(draw, settings.value.speed)
     tunes[settings.value.selectedTune].loop = true
     tunes[settings.value.selectedTune].play()
@@ -59,6 +91,8 @@ export const useMovementStore = defineStore('movement', () => {
     clearInterval(settings.value.interV)
     tunes[settings.value.selectedTune].pause()
     tunes[settings.value.selectedTune].currentTime = 0;
+    settings.value.isPlaying = false;
+    settings.value.settingsOpened = true;
   }
   const updateTune = (newTune, oldTune) => {
     tunes[oldTune].pause()
@@ -73,5 +107,5 @@ export const useMovementStore = defineStore('movement', () => {
   const updateSpeed = (newTune) => {
     settings.value.speed = newTune
   }
-  return { start, stop, updateSettings,updateTune,updateSpeed,updateTime }
+  return { start, stop, updateSettings,updateTune,updateSpeed,updateTime, settings , clearSettings }
 })
