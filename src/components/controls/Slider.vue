@@ -2,29 +2,51 @@
 <template>
   <div>
     <div class="body">
-      <div class="range" :style="show?'margin-top: 30px;':''">
+      <div class="range" :style="show ? 'margin-top: 35px;' : ''">
         <div class="sliderValue" :style="`left: -30%`">
-          <span :style="`left: ${14 + value*0.35}%;`" :class="show ? 'show' : ''">{{ value }}</span>
+          <span :style="`left: ${14 + value * 0.35}%;`" :class="show ? 'show' : ''">{{ isSpeed? `${value}%`: `${timeInSeconds}`.toHHMMSS()
+          }}</span>
         </div>
         <div class="field">
-          <input
-            v-model="value"
-            @input="show = true"
-            @blur="show = false"
-            type="range"
-            min="1"
-            max="100"
-            steps="1"
-          />
+          <input v-model="value" @input="show = true" @blur="show = false"  type="range" min="1" max="100" steps="1" />
         </div>
       </div>
     </div>
   </div>
 </template>
 <script setup>
-import { ref } from "vue";
+
+import { ref, computed, watch } from 'vue'
+import { useMovementStore } from '@/stores/movement'
+const props = defineProps({
+  isSpeed: Boolean,
+});
+
+String.prototype.toHHMMSS = function () {
+  var sec_num = parseInt(this, 10); // don't forget the second param
+  var hours = Math.floor(sec_num / 3600);
+  var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+  var seconds = sec_num - (hours * 3600) - (minutes * 60);
+
+  if (hours < 10) { hours = "0" + hours; }
+  if (minutes < 10) { minutes = "0" + minutes; }
+  if (seconds < 10) { seconds = "0" + seconds; }
+  return minutes + ':' + seconds;
+}
+
+const movement = useMovementStore()
 const value = ref(10);
+
+const timeInSeconds = computed(() => (30 * 60) * (value.value / 100))
+const formatedSpeed = computed(() => value.value * 2)
+
+watch(value, (newValue) => {
+  props.isSpeed ? movement.updateSpeed(newValue * 2) : movement.updateTime((30 * 60) * (newValue / 100))
+})
+
+
 const show = ref(false);
+
 </script>
 <style scoped>
 .body {
@@ -48,13 +70,13 @@ const show = ref(false);
 
 .sliderValue span {
   position: absolute;
-  width: 34px;
-  height: 34px;
+  width: 43px;
+  height: 43px;
   transform: translateX(-70%) scale(0);
   font-weight: 500;
-  top: -30px;
+  top: -40px;
 
-  line-height: 55px;
+  line-height: 60px;
   z-index: 2;
   color: #fff;
   transform-origin: bottom;
@@ -126,12 +148,12 @@ const show = ref(false);
 }
 
 .range input::-webkit-slider-thumb:active {
-    -webkit-appearance: none;
-    width: 20px;
-    height: 20px;
-    background: #bdbaba;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #bdbaba;
 
-  }
+}
 
 .range input::-moz-range-thumb {
   -webkit-appearance: none;

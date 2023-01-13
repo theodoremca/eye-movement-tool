@@ -10,7 +10,8 @@ export const useMovementStore = defineStore('movement', () => {
   var maxX = 200;
   var maxY = 300;
   var interV;
-  var speed = 40;
+  var speed = 200;
+  var time = 30;
   var color = "#0000ff";
   var size = 20;
   var selectedTune = 0
@@ -25,6 +26,7 @@ export const useMovementStore = defineStore('movement', () => {
     speed,
     color,
     size,
+    time,
     selectedTune
   });
 
@@ -47,13 +49,29 @@ export const useMovementStore = defineStore('movement', () => {
     Object.assign(settings.value, settingsUpdate)
   }
 
-  const start = () => (settings.value.interV = setInterval(draw, settings.value.speed));
-  const stop = () => clearInterval(settings.value.interV)
+  const start = () =>{
+    settings.value.interV = setInterval(draw, settings.value.speed)
+    tunes[settings.value.selectedTune].loop = true
+    tunes[settings.value.selectedTune].play()
+    };
+
+  const stop = () => {
+    clearInterval(settings.value.interV)
+    tunes[settings.value.selectedTune].pause()
+    tunes[settings.value.selectedTune].currentTime = 0;
+  }
   const updateTune = (newTune, oldTune) => {
     tunes[oldTune].pause()
     tunes[oldTune].currentTime = 0;
-    tunes[newTune].loop = true
-    tunes[newTune].play()
+    settings.value.selectedTune = newTune
   }
-  return { start, stop, updateSettings,updateTune }
+
+  const updateTime = (newTune) => {
+    settings.value.time = newTune
+  }
+
+  const updateSpeed = (newTune) => {
+    settings.value.speed = newTune
+  }
+  return { start, stop, updateSettings,updateTune,updateSpeed,updateTime }
 })

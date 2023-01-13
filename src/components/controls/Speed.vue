@@ -8,7 +8,7 @@ import Slider from "./Slider.vue";
         >
           SPEED
         </p>
-        <slider />
+        <slider :is-speed="true" />
       </div>
 </template>
 
