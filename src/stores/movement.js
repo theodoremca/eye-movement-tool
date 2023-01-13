@@ -5,12 +5,12 @@ export const useMovementStore = defineStore('movement', () => {
   const tunes = [0, 1].map(e => new Audio(`./sounds/drum-loop${e}.wav`))
   var dx = 4;
   var dy = 0;
-  var y = 150;
-  var x = 150;
-  var maxX = 200;
+  var maxX = 300;
   var maxY = 300;
+  var y = maxY/2;
+  var x = maxX/2;
   var interV;
-  var speed = 200;
+  var speed = 10;
   var time = 30;
   var color = "#454ABE";
   var size = 20;
@@ -47,7 +47,8 @@ export const useMovementStore = defineStore('movement', () => {
     time,
     selectedTune,
     isPlaying,
-    settingsOpened
+    settingsOpened,
+    ground:null
   });
 
  
@@ -82,7 +83,7 @@ export const useMovementStore = defineStore('movement', () => {
   const start = () =>{
     if(!settings.value.isPlaying) settings.value.isPlaying = true;
     if(settings.value.settingsOpened) settings.value.settingsOpened = false;
-    settings.value.interV = setInterval(draw, settings.value.speed)
+    settings.value.interV = setInterval(draw, (25/settings.value.speed))
     tunes[settings.value.selectedTune].loop = true
     tunes[settings.value.selectedTune].play()
     };

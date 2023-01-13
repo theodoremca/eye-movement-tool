@@ -35,13 +35,13 @@ String.prototype.toHHMMSS = function () {
 }
 
 const movement = useMovementStore()
-const value = ref(props.isSpeed?movement.settings.speed/2: (movement.settings.time*100)/(30*60));
+const value = ref(props.isSpeed?movement.settings.speed*4: (movement.settings.time*100)/(30*60));
 
 const timeInSeconds = computed(() => (30 * 60) * (value.value / 100))
-const formatedSpeed = computed(() => value.value * 2)
+const formatedSpeed = computed(() => value.value / 4)
 
 watch(value, (newValue) => {
-  props.isSpeed ? movement.updateSpeed(newValue * 2) : movement.updateTime((30 * 60) * (newValue / 100))
+  props.isSpeed ? movement.updateSpeed(newValue / 4) : movement.updateTime((30 * 60) * (newValue / 100))
 })
 
 

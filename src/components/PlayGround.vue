@@ -1,23 +1,33 @@
 <template>
-  <div ref="headline">
-    <canvas id="myCanvas" width="200" height="300"></canvas>
+  <div ref="ground">
+    <canvas id="myCanvas" :width="movement.settings.maxX" :height="movement.settings.maxY"></canvas>
   </div>
 </template>
 
 <script setup>
-import { onMounted ,  ref } from 'vue';
-import { useMovementStore } from './../stores/movement'
-const movement = useMovementStore()
-const headline = ref(null);
-onMounted(()=>{
- console.log({headline:headline.value})
-function myEventHandler(e) {
-  console.log(headline.value.clientHeight,headline.value.clientWidth)
-}
-window.addEventListener('resize', myEventHandler)
-})
+import { onMounted, ref , watch } from "vue";
+import { useMovementStore } from "./../stores/movement";
+const movement = useMovementStore();
+const ground = ref(null);
 
-
+onMounted(() => {
+  movement.updateSettings({
+      maxY: ground.value.clientHeight,
+      maxX: ground.value.clientWidth,
+      ground
+    });
+  console.log({ ground: ground.value });
+  function myEventHandler(e) {
+    console.log(ground.value.clientHeight, ground.value.clientWidth);
+    movement.updateSettings({
+      maxY: ground.value.clientHeight,
+      maxX: ground.value.clientWidth,
+      ground
+    });
+  }
+  window.addEventListener("resize", myEventHandler);
+  window.addEventListener("click", myEventHandler);
+});
 </script>
 
 <style scoped>
