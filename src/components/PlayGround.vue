@@ -14,7 +14,7 @@ onMounted(() => {
   movement.updateSettings({
       maxY: ground.value.clientHeight,
       maxX: ground.value.clientWidth,
-      ground
+      y:ground.value.clientHeight/2
     });
   console.log({ ground: ground.value });
   function myEventHandler(e) {
@@ -22,7 +22,7 @@ onMounted(() => {
     movement.updateSettings({
       maxY: ground.value.clientHeight,
       maxX: ground.value.clientWidth,
-      ground
+      y: ground.value.clientHeight/2
     });
   }
   window.addEventListener("resize", myEventHandler);

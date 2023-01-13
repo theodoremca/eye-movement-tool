@@ -13,7 +13,8 @@ const movement = useMovementStore()
   <main> 
     <div class="flex-container">
       <nav-controls class="flex-items"></nav-controls>
-      <settings v-if="movement.settings.settingsOpened"  class="flex-items"></settings>
+      <!-- v-if="movement.settings.settingsOpened"  -->
+      <settings  class="flex-items"></settings>
       <play-ground  class="flex-items"></play-ground>
    </div>
   </main>

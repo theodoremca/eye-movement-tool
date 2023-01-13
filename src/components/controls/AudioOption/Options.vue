@@ -12,7 +12,7 @@
       </div>
       <div class="flex-items">
         <label for="happy">
-          <input v-model="selectedTune" type="radio" name="rating" class="happy" id="happy" value=1 checked />
+          <input v-model="selectedTune" type="radio" name="rating" class="happy" id="happy" value=1 />
           <div class="radio-button">
             <p class="button-text">
               2</p>
@@ -27,7 +27,7 @@
 import { ref, watch } from 'vue'
 import { useMovementStore } from '@/stores/movement'
 const movement = useMovementStore()
-const selectedTune = ref(0)
+const selectedTune = ref(movement.settings.selectedTune)
 
 watch(selectedTune, (newTune, oldTune) => {
   movement.updateTune(newTune, oldTune)
