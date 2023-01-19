@@ -1,5 +1,5 @@
 <script setup>
-import Slider from "./Slider.vue";
+import Slider from "./SpeedSlider.vue";
 </script>
 <template>
     <div>

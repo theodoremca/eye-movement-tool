@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="flex-container">
-            <div class="flex-items"><main-button  @click="movement.openSettings()"  :text="'SETTINS'"/></div>
+            <div class="flex-items"><main-button  @click="movement.openSettings()"  :text="'SETTINGS'"/></div>
             <div class="flex-items"><main-button  @click="movement.start()"  :text="'START'"/></div>
          </div>
     </div>

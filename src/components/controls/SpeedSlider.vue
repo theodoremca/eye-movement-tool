@@ -4,11 +4,11 @@
     <div class="body">
       <div class="range" :style="show ? 'margin-top: 35px;' : ''">
         <div class="sliderValue" :style="`left: -30%`">
-          <span :style="`left: ${14 +(value * 0.35/1.8)}%;`" :class="show ? 'show' : ''">{{ `${timeInSeconds}`.toHHMMSS()
+          <span :style="`left: ${14 + value * 0.35/0.73}%;`" :class="show ? 'show' : ''">{{ `${formatedSpeed}%`
           }}</span>
         </div>
         <div class="field">
-          <input v-model="value" @input="show = true" @blur="show = false"  type="range" min="3" max="180" steps="1" />
+          <input v-model="value" @input="show = true" @blur="show = false"  type="range" min="0" max="73" steps="1" />
         </div>
       </div>
     </div>
@@ -18,6 +18,7 @@
 
 import { ref, computed, watch } from 'vue'
 import { useMovementStore } from '@/stores/movement'
+import internal from 'stream';
 const props = defineProps({
   isSpeed: Boolean,
 });
@@ -35,12 +36,12 @@ String.prototype.toHHMMSS = function () {
 }
 
 const movement = useMovementStore()
-const value = ref(movement.settings.time/10);
+const value = ref(props.isSpeed?movement.settings.speed*4: (movement.settings.time*100)/(30*60));
 
-const timeInSeconds = computed(() => value.value*10)
+const formatedSpeed = computed(() => parseInt(value.value)+27)
 
 watch(value, (newValue) => {
-   movement.updateTime(newValue*10)
+  props.isSpeed ? movement.updateSpeed(newValue / 4) : movement.updateTime((30 * 60) * (newValue / 100))
 })
 
 

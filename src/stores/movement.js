@@ -1,7 +1,10 @@
 import { ref} from 'vue'
 import { defineStore } from 'pinia'
+import { timer } from './timer'
 
 export const useMovementStore = defineStore('movement', () => {
+
+  
   const tunes = [0, 1].map(e => new Audio(`./sounds/tune${e}.wav`))
   var dx = 4;
   var dy = 0;
@@ -69,12 +72,13 @@ export const useMovementStore = defineStore('movement', () => {
     context.arc(settings.value.x, settings.value.y, settings.value.size, 0, Math.PI * 2, true);
     context.closePath();
     context.fill();
-      console.log(`color: ${settings.value.color}, y: ${settings.value.y}`);
+      console.log(`time: ${settings.value.time}, y: ${settings.value.y}`);
+      // console.log(`color: ${settings.value.color}, y: ${settings.value.y}`);
     // console.log(`x: ${settings.value.x}, y: ${settings.value.y}`);
     // if (settings.value.x < 20 || settings.value.x > settings.value.maxX - 20) settings.value.dx = -settings.value.dx;
     if (settings.value.x < 20 || settings.value.x > settings.value.maxX - 20) direction=!direction;
     if (settings.value.x < 20 || settings.value.x > settings.value.maxX - 20) {
-      tunes[settings.value.selectedTune].play()
+      if(settings.value.isPlaying)  tunes[settings.value.selectedTune].play()
     }
     if (settings.value.y < 20 || settings.value.y > settings.value.maxY - 20) settings.value.dy = -settings.value.dy;
   };
@@ -99,7 +103,7 @@ const openSettings = () =>{
     if(settings.value.settingsOpened) settings.value.settingsOpened = false;
     draw(true)
     settings.value.interV = setInterval(draw, (25/settings.value.speed))  
-
+    timer.setup({time:settings.value.time*1000,callBack:stop})
     };
 
   const stop = () => {
@@ -107,6 +111,7 @@ const openSettings = () =>{
     settings.value.isPlaying = false;
     // settings.value.settingsOpened = true;
     setTimeout(()=>draw(true),100)
+    timer.cancel()
   }
   const updateTune = (newTune, oldTune) => {
     tunes[oldTune].pause()
@@ -116,10 +121,12 @@ const openSettings = () =>{
 
   const updateTime = (newTune) => {
     settings.value.time = newTune
+    setTimeout(()=>draw(true),100)
   }
 
   const updateSpeed = (newTune) => {
     settings.value.speed = newTune
+    setTimeout(()=>draw(true),100)
   }
   return { start, stop, updateSettings,updateTune,updateSpeed,updateTime, settings , clearSettings , openSettings}
 })
