@@ -1,5 +1,5 @@
 <template>
-  <div ref="ground">
+  <div style="background-color: aquamarine;" ref="ground">
     <canvas id="myCanvas" :width="movement.settings.maxX" :height="movement.settings.maxY"></canvas>
   </div>
 </template>

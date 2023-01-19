@@ -1,14 +1,18 @@
 <template>
     <div>
         <div class="flex-container">
-            <div class="flex-items"><main-button :text="'BACK'"/></div>
-            <div class="flex-items"><main-button :text="'START'"/></div>
+            <div class="flex-items"><main-button  @click="movement.openSettings()"  :text="'SETTINS'"/></div>
+            <div class="flex-items"><main-button  @click="movement.start()"  :text="'START'"/></div>
          </div>
     </div>
 </template>
 
 <script setup>
 import MainButton from './Button.vue'
+
+import { useMovementStore } from '../../stores/movement'
+const movement = useMovementStore()
+
 </script>
 
 <style  scoped>

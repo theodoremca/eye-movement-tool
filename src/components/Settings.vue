@@ -7,7 +7,7 @@
             <div class="flex-items"><audio-option/></div>
             <div class="flex-items"><Time/></div>
             <div class="flex-items"><Speed/></div>
-            <div v-if="false" class="flex-items"><main-buttons/></div>
+            <div  class="flex-items"><main-buttons/></div>
          </div>
     </div>
 </template>
