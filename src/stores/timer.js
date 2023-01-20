@@ -1,3 +1,4 @@
+
 export const timer = {
     remind(callBack) {
       callBack()
@@ -6,13 +7,13 @@ export const timer = {
   
     setup({time,callBack}) {
       if (typeof this.timeoutID === 'number') {
-        this.cancel();
+        this.cancel(callBack); 
       }
-  
       this.timeoutID = setTimeout(()=>this.remind(callBack), time);
     },
   
-    cancel() {
+    cancel(callBack) {
+     if(callBack) callBack();
       clearTimeout(this.timeoutID);
     }
   };

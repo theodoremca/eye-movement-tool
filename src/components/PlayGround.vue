@@ -1,5 +1,6 @@
 <template>
-  <div style="background-color: aquamarine;" ref="ground">
+  <div ref="ground">
+    <div style="color: azure;">{{movement.count}}</div>
     <canvas id="myCanvas" :width="movement.settings.maxX" :height="movement.settings.maxY"></canvas>
   </div>
 </template>
