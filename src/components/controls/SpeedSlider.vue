@@ -18,7 +18,6 @@
 
 import { ref, computed, watch } from 'vue'
 import { useMovementStore } from '@/stores/movement'
-import internal from 'stream';
 const props = defineProps({
   isSpeed: Boolean,
 });
@@ -36,12 +35,12 @@ String.prototype.toHHMMSS = function () {
 }
 
 const movement = useMovementStore()
-const value = ref(props.isSpeed?movement.settings.speed*4: (movement.settings.time*100)/(30*60));
+const value = ref((movement.settings.dx-10)/0.54);
 
 const formatedSpeed = computed(() => parseInt(value.value)+27)
 
 watch(value, (newValue) => {
-  props.isSpeed ? movement.updateSpeed(newValue / 4) : movement.updateTime((30 * 60) * (newValue / 100))
+  movement.updateSpeed(10 + (newValue * 0.54))
 })
 
 

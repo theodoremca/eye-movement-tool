@@ -127,7 +127,7 @@ const openSettings = () =>{
   }
 
   const updateSpeed = (newTune) => {
-    settings.value.speed = newTune
+    settings.value.dx = newTune
     setTimeout(()=>draw(true),100)
   }
   return { start, stop, updateSettings,updateTune,updateSpeed,updateTime, settings , clearSettings , openSettings}
