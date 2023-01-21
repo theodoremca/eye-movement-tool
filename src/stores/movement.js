@@ -13,7 +13,7 @@ export const useMovementStore = defineStore('movement', () => {
   var interV;
   var speed = 10;
   var busy = false;
-  var time = 30;
+  var time = 3*60;
   var counter=time;
   var color = "#454ABE";
   var size = 20;
