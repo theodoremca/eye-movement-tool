@@ -6,7 +6,7 @@ export const useMovementStore = defineStore('movement', () => {
 
   
   const tunes = [0, 1].map(e => new Audio(`./sounds/tune${e}.wav`))
-  var dx = 4;
+  var dx = 10;
   var dy = 0;
   var maxX = 300;
   var maxY = 300;
@@ -78,8 +78,11 @@ export const useMovementStore = defineStore('movement', () => {
     // if (settings.value.x < 20 || settings.value.x > settings.value.maxX - 20) settings.value.dx = -settings.value.dx;
     if (settings.value.x < 20 || settings.value.x > settings.value.maxX - 20) direction=!direction;
     if (settings.value.x < 20 || settings.value.x > settings.value.maxX - 20) {
-      if(settings.value.isPlaying)  tunes[settings.value.selectedTune].play()
-    }
+      if(settings.value.isPlaying)  {
+        tunes[settings.value.selectedTune].pause()
+        tunes[settings.value.selectedTune].currentTime = 0;
+        tunes[settings.value.selectedTune].play()
+    }}
     if (settings.value.y < 20 || settings.value.y > settings.value.maxY - 20) settings.value.dy = -settings.value.dy;
   };
 
@@ -96,20 +99,19 @@ export const useMovementStore = defineStore('movement', () => {
 const openSettings = () =>{
   // if(!settings.value.isPlaying) settings.value.isPlaying = true;
   settings.value.settingsOpened = !settings.value.settingsOpened;
-  if(!settings.value.isPlaying) setTimeout(()=>draw(true),100)
+  if(!settings.value.isPlaying) setTimeout(()=>draw(true),50)
 }
   const start = () =>{
     if(!settings.value.isPlaying) settings.value.isPlaying = true;
     if(settings.value.settingsOpened) settings.value.settingsOpened = false;
     draw(true)
-    settings.value.interV = setInterval(draw, (25/settings.value.speed))  
+    settings.value.interV = setInterval(draw, 10)  
     timer.setup({time:settings.value.time*1000,callBack:stop})
     };
 
   const stop = () => {
     clearInterval(settings.value.interV)
     settings.value.isPlaying = false;
-    // settings.value.settingsOpened = true;
     setTimeout(()=>draw(true),100)
     timer.cancel()
   }
