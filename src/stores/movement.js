@@ -4,7 +4,7 @@ import { timer } from './timer'
 
 export const useMovementStore = defineStore('movement', () => {
   const tunes = [0, 1].map(e => new Audio(`./sounds/tune${e}.wav`))
-  var dx = 10;
+  var dx = 10+5;
   var dy = 0;
   var maxX = 300;
   var maxY = 300;
