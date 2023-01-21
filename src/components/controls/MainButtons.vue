@@ -1,8 +1,9 @@
 <template>
     <div>
         <div class="flex-container">
-            <div class="flex-items"><main-button  @click="movement.openSettings()"  :text="'SETTINGS'"/></div>
-            <div class="flex-items"><main-button  @click="movement.start()"  :text="'START'"/></div>
+            <div class="flex-items"><main-button  @click="movement.openSettings()"  :text="'BACK'"/></div>
+            <div class="flex-items" v-if="movement.settings.isPlaying" ><main-button    @click="movement.stop()"  :text="'STOP'"/></div>
+            <div class="flex-items"  v-else><main-button   @click="movement.start()"  :text="'START'"/></div>
          </div>
     </div>
 </template>

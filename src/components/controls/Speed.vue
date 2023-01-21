@@ -1,5 +1,5 @@
 <script setup>
-import Slider from "./SpeedSlider.vue";
+import SpeedSlider from "./SpeedSlider.vue";
 </script>
 <template>
     <div>
@@ -8,7 +8,7 @@ import Slider from "./SpeedSlider.vue";
         >
           SPEED
         </p>
-        <slider :is-speed="true" />
+        <speed-slider/>
       </div>
 </template>
 

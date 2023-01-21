@@ -2,21 +2,9 @@ import { ref } from "vue";
 import { defineStore } from "pinia";
 import { timer } from "./timer";
 
-export const useMovementStore = defineStore("movement", () => {
-  const count = ref(0);
-  let interval;
-  function startWatch(time) {
-    count.value = time;
-    interval = setInterval(() => {
-      count.value--;
-    }, 1000);
-    if (count.value == 0) clearInterval(interval);
-  }
-  function stopWatch() {
-    clearInterval(interval);
-  }
-  const tunes = [0, 1].map((e) => new Audio(`./sounds/tune${e}.wav`));
-  var dx = 4;
+export const useMovementStore = defineStore('movement', () => {
+  const tunes = [0, 1].map(e => new Audio(`./sounds/tune${e}.wav`))
+  var dx = 10+8;
   var dy = 0;
   var maxX = 300;
   var maxY = 300;
@@ -24,8 +12,10 @@ export const useMovementStore = defineStore("movement", () => {
   var x = maxX / 2;
   var interV;
   var speed = 10;
-  var time = 30;
-  var color = "#454ABE";
+  var busy = false;
+  var time = 3*60;
+  var counter=time;
+  var color = '#FFFF00';
   var size = 20;
   var selectedTune = 0;
   var isPlaying = false;
@@ -42,6 +32,7 @@ export const useMovementStore = defineStore("movement", () => {
     color,
     size,
     time,
+    counter,
     selectedTune,
     isPlaying,
     settingsOpened,
@@ -51,12 +42,14 @@ export const useMovementStore = defineStore("movement", () => {
     dy,
     y,
     x,
+    counter,
     maxX,
     maxY,
     interV,
     speed,
     color,
     size,
+    busy,
     time,
     selectedTune,
     isPlaying,
@@ -66,15 +59,15 @@ export const useMovementStore = defineStore("movement", () => {
 
   let direction = true;
   const draw = (updating) => {
-    if (!updating) {
-      if (direction) {
-        settings.value.x += settings.value.dx;
-        settings.value.y += settings.value.dy;
-      } else {
-        settings.value.x -= settings.value.dx;
-        settings.value.y -= settings.value.dy;
-      }
+    if(settings.value.busy)return;
+    if(!updating){
+
+    if(direction)  {settings.value.x += settings.value.dx;
+      settings.value.y += settings.value.dy;}
+      else{settings.value.x -= settings.value.dx;
+        settings.value.y -= settings.value.dy;}
     }
+    if(settings.value.counter== 0) return;
     let context = myCanvas.getContext("2d");
     context.clearRect(0, 0, settings.value.maxX, settings.value.maxY);
     context.beginPath();
@@ -89,17 +82,19 @@ export const useMovementStore = defineStore("movement", () => {
     );
     context.closePath();
     context.fill();
-    console.log(`time: ${settings.value.time}, y: ${settings.value.y}`);
-    // console.log(`color: ${settings.value.color}, y: ${settings.value.y}`);
-    // console.log(`x: ${settings.value.x}, y: ${settings.value.y}`);
+      // console.log(`time: ${settings.value.time}, y: ${settings.value.y}`);
+      // console.log(`color: ${settings.value.color}, y: ${settings.value.y}`);
+    console.log(`x: ${settings.value.x}, y: ${settings.value.y}`);
     // if (settings.value.x < 20 || settings.value.x > settings.value.maxX - 20) settings.value.dx = -settings.value.dx;
     if (settings.value.x < 20 || settings.value.x > settings.value.maxX - 20)
       direction = !direction;
     if (settings.value.x < 20 || settings.value.x > settings.value.maxX - 20) {
-      if (settings.value.isPlaying) tunes[settings.value.selectedTune].play();
-    }
-    if (settings.value.y < 20 || settings.value.y > settings.value.maxY - 20)
-      settings.value.dy = -settings.value.dy;
+      if(settings.value.isPlaying)  {
+        tunes[settings.value.selectedTune].pause()
+        tunes[settings.value.selectedTune].currentTime = 0;
+        tunes[settings.value.selectedTune].play()
+    }}
+    if (settings.value.y < 20 || settings.value.y > settings.value.maxY - 20) settings.value.dy = -settings.value.dy;
   };
 
   const updateSettings = (settingsUpdate) => {
@@ -108,29 +103,33 @@ export const useMovementStore = defineStore("movement", () => {
   };
 
   const clearSettings = () => {
-    Object.assign(settings.value, init);
-  };
-  const openSettings = () => {
-    // if(!settings.value.isPlaying) settings.value.isPlaying = true;
-    settings.value.settingsOpened = !settings.value.settingsOpened;
-    if (!settings.value.isPlaying) setTimeout(() => draw(true), 100);
-  };
-  const start = () => {
-    if (!settings.value.isPlaying) settings.value.isPlaying = true;
-    if (settings.value.settingsOpened) settings.value.settingsOpened = false;
-    draw(true);
-    settings.value.interV = setInterval(draw, 25 / settings.value.speed);
-    startWatch(settings.value.time)
-    timer.setup({ time: settings.value.time * 1000, callBack: stop });
-  };
+    Object.assign(settings.value, init)
+  }
+const openSettings = () =>{
+  
+  settings.value.x=680;
+  // if(!settings.value.isPlaying) settings.value.isPlaying = true;
+  settings.value.settingsOpened = !settings.value.settingsOpened;
+  // if(settings.value.settingsOpened)updateBusy(true)
+  if(!settings.value.isPlaying) setTimeout(()=>draw(true),50)
+}
+  const start = () =>{
+    settings.value.x = 630;
+    if(settings.value.counter== 0)settings.value.counter=settings.value.time;
+    if(!settings.value.isPlaying) settings.value.isPlaying = true;
+    if(settings.value.settingsOpened) settings.value.settingsOpened = false;
+    draw(true)
+    settings.value.interV = setInterval(draw, 10) 
+
+    timer.setup({time:settings.value.time*1000,callBack:stop,intervalCallback:updateCounter})
+    };
 
   const stop = () => {
     clearInterval(settings.value.interV);
     settings.value.isPlaying = false;
-    // settings.value.settingsOpened = true;
-    setTimeout(() => draw(true), 100);
-    timer.cancel(()=>stopWatch());
-  };
+    setTimeout(()=>draw(true),100)
+    timer.cancel()
+  }
   const updateTune = (newTune, oldTune) => {
     tunes[oldTune].pause();
     tunes[oldTune].currentTime = 0;
@@ -138,26 +137,21 @@ export const useMovementStore = defineStore("movement", () => {
   };
 
   const updateTime = (newTune) => {
-    settings.value.time = newTune;
-    setTimeout(() => draw(true), 100);
-  };
+    settings.value.time = newTune
+    settings.value.counter = newTune; 
+    if(settings.value.isPlaying) timer.setup({time:settings.value.time*1000,callBack:stop,intervalCallback:updateCounter})
+    setTimeout(()=>draw(true),100)
+  }
+
+  const updateCounter = (newTune) => {
+  settings.value.counter!= 0?settings.value.counter--:stop()
+  }
 
   const updateSpeed = (newTune) => {
-    settings.value.speed = newTune;
-    setTimeout(() => draw(true), 100);
-  };
-  return {
-    start,
-    stop,
-    updateSettings,
-    updateTune,
-    updateSpeed,
-    updateTime,
-    settings,
-    clearSettings,
-    openSettings,
-    startWatch,
-    stopWatch,
-    count
-  };
-});
+    settings.value.dx = newTune
+    setTimeout(()=>draw(true),100)
+  }
+  const updateBusy = (state)=>{settings.value.busy=state}
+
+  return { start, stop,updateBusy, updateSettings,updateTune,updateSpeed,updateTime, settings , clearSettings , openSettings}
+})
