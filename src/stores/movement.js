@@ -15,7 +15,7 @@ export const useMovementStore = defineStore('movement', () => {
   var busy = false;
   var time = 3*60;
   var counter=time;
-  var color = "#454ABE";
+  var color = '#FFFF00';
   var size = 20;
   var selectedTune = 0
   var isPlaying = false;

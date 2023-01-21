@@ -9,9 +9,9 @@
     <canvas id="myCanvas" :width="movement.settings.maxX" :height="movement.settings.maxY"></canvas>
     <div v-if="!movement.settings.settingsOpened && show"  style="  position: absolute;
     cursor: pointer;
-    bottom: 90px;
+    bottom: 35px;
     z-index: 100;
-    left: 40px;
+    left: 30px;
     font-size: 31px; font-weight: 700; line-height: 100%; color: white;
     "> <edit-icon :scale="scale" @mousedown="mDown()" @mouseup="mUp" class="flex-itemsw" />
       <stop-icon v-if="movement.settings.isPlaying" :scale="scale" @click="movement.stop()" class="flex-itemsw" />
