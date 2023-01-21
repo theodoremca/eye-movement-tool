@@ -102,12 +102,15 @@ export const useMovementStore = defineStore('movement', () => {
     Object.assign(settings.value, init)
   }
 const openSettings = () =>{
+  
   settings.value.x=680;
   // if(!settings.value.isPlaying) settings.value.isPlaying = true;
   settings.value.settingsOpened = !settings.value.settingsOpened;
+  // if(settings.value.settingsOpened)updateBusy(true)
   if(!settings.value.isPlaying) setTimeout(()=>draw(true),50)
 }
   const start = () =>{
+    settings.value.x = 630;
     if(settings.value.counter== 0)settings.value.counter=settings.value.time;
     if(!settings.value.isPlaying) settings.value.isPlaying = true;
     if(settings.value.settingsOpened) settings.value.settingsOpened = false;

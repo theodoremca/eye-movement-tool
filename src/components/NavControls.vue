@@ -30,6 +30,7 @@ const mDown = ()=>{
 
 const mUp = ()=>{
   movement.openSettings()
+  // movement.stop()
   movement.updateBusy(false)
 }
 
