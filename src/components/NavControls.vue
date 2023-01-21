@@ -5,7 +5,7 @@
       <pause-icon v-if="false" :scale="scale" class="flex-items" />
       <!-- <clear-icon :scale="scale" @click="movement.clearSettings()" class="flex-items" /> -->
       <delete-icon v-if="false" :scale="scale" class="flex-items" />
-      <edit-icon  @click="movement.openSettings()"  :scale="scale" class="flex-items" />
+      <edit-icon   :scale="scale" @mousedown="mDown()" @mouseup="mUp" class="flex-items" />
       <stop-icon v-if="movement.settings.isPlaying" :scale="scale" @click="movement.stop()" class="flex-items"/>
       <play-icon v-else :scale="scale" @click="movement.start()"  class="flex-items" />
     </div>
@@ -24,6 +24,14 @@ import ClearIcon from "./icons/IconClear.vue";
 const scale = 1.3;
 
 const movement = useMovementStore()
+const mDown = ()=>{
+  movement.updateBusy(true)
+}
+
+const mUp = ()=>{
+  movement.openSettings()
+  movement.updateBusy(false)
+}
 
 
 </script>

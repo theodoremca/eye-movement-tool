@@ -1,5 +1,11 @@
 <template>
-  <div style="background-color: aquamarine;" ref="ground">
+  <div  ref="ground">
+    <div style="  position: absolute;
+    cursor: pointer;
+    top: 40px;
+    right: 42px;
+    font-size: 31px; font-weight: 700; line-height: 100%; color: white;
+    ">{{toHHMMSS(movement.settings.counter)}}</div>
     <canvas id="myCanvas" :width="movement.settings.maxX" :height="movement.settings.maxY"></canvas>
   </div>
 </template>
@@ -7,6 +13,7 @@
 <script setup>
 import { onMounted, ref , watch } from "vue";
 import { useMovementStore } from "./../stores/movement";
+import {toHHMMSS} from "@/stores/timer"
 const movement = useMovementStore();
 const ground = ref(null);
 

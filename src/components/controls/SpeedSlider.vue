@@ -8,7 +8,7 @@
           }}</span>
         </div>
         <div class="field">
-          <input v-model="value" @input="show = true" @blur="show = false"  type="range" min="0" max="73" steps="1" />
+          <input @mousedown="mDown()" @mouseup="mUp()" v-model="value" @input="onInput()" @blur="onBlur()"  type="range" min="0" max="73" steps="1" />
         </div>
       </div>
     </div>
@@ -18,21 +18,7 @@
 
 import { ref, computed, watch } from 'vue'
 import { useMovementStore } from '@/stores/movement'
-const props = defineProps({
-  isSpeed: Boolean,
-});
 
-String.prototype.toHHMMSS = function () {
-  var sec_num = parseInt(this, 10); // don't forget the second param
-  var hours = Math.floor(sec_num / 3600);
-  var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
-  var seconds = sec_num - (hours * 3600) - (minutes * 60);
-
-  if (hours < 10) { hours = "0" + hours; }
-  if (minutes < 10) { minutes = "0" + minutes; }
-  if (seconds < 10) { seconds = "0" + seconds; }
-  return minutes + ':' + seconds;
-}
 
 const movement = useMovementStore()
 const value = ref((movement.settings.dx-10)/0.54);
@@ -42,6 +28,22 @@ const formatedSpeed = computed(() => parseInt(value.value)+27)
 watch(value, (newValue) => {
   movement.updateSpeed(10 + (newValue * 0.54))
 })
+
+const onInput=()=>{
+  show.value = true;
+  movement.updateBusy(true)
+}
+const onBlur = ()=>{
+  show.value = false;
+}
+const mDown = ()=>{
+  movement.updateSettings({x:680})
+  movement.updateBusy(true)
+}
+
+const mUp = ()=>{
+  movement.updateBusy(false)
+}
 
 
 const show = ref(false);
